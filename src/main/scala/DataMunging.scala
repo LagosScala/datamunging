@@ -18,6 +18,10 @@ object DataMunging {
     val filename = "weather.dat"
     val fileLines = io.Source.fromFile(filename).getLines().toList
 
+    /** filter empty list contents **/
+    val filteredFileLines = fileLines.filter(l => l != "")
 
+    val lines =  filteredFileLines.tail.map(l => l.split(" "))
+    val filteredLines = lines.map(l => l.filter(_ != ""))
   }
 }
