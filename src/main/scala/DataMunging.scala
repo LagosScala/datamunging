@@ -18,10 +18,17 @@ object DataMunging {
     val filename = "weather.dat"
     val fileLines = io.Source.fromFile(filename).getLines().toList
 
-    /** filter empty list contents **/
+    /** filter empty lines **/
     val filteredFileLines = fileLines.filter(l => l != "")
 
-    val lines =  filteredFileLines.tail.map(l => l.split(" "))
-    val filteredLines = lines.map(l => l.filter(_ != ""))
+    /** remove header and footer from data  and split lines into Array of Strings **/
+    val lines =  filteredFileLines.tail.init.map(l => l.split(" "))
+
+    /** filter out empty indices from array and remove asterisks from data **/
+    val filteredLines = lines.map(l => l.filter(_ != "").map(s => s.replaceAll("[*]", "")))
+
+    /** store required data in weatherline instances  **/
+    val weatherLines = filteredLines.map(l => weatherLine(l(0).toInt,l(1).toDouble,l(2).toDouble))
+
   }
 }
