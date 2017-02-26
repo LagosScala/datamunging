@@ -30,5 +30,11 @@ object DataMunging {
     /** store required data in weatherline instances  **/
     val weatherLines = filteredLines.map(l => weatherLine(l(0).toInt,l(1).toDouble,l(2).toDouble))
 
+    /** sort with temperature difference **/
+    val sortedData = weatherLines.sortWith(temperatureDiff)
+    val maxTempSpread = sortedData.head
+
+    println("Day " + maxTempSpread.dayNumber + " has Max Temperature spread of " + (maxTempSpread.maxTemperature - maxTempSpread.minTemperature))
+
   }
 }
